@@ -271,10 +271,14 @@
                             <line x1="101" y1="55" x2="101" y2="35" stroke="#666" stroke-width="1"/>
                             <line x1="151" y1="85" x2="151" y2="105" stroke="#666" stroke-width="1"/>
                             <!-- Callout labels -->
-                            <text x="51" y="30" text-anchor="middle" font-size="10" fill="#555" font-weight="500">1ª cifra</text>
-                            <text x="76" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">2ª cifra</text>
-                            <text x="101" y="30" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Moltiplic.</text>
+                            <text x="51" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">1ª cifra</text>
+                            <text id="band1-value" x="51" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
+                            <text x="76" y="10" text-anchor="middle" font-size="10" fill="#555" font-weight="500">2ª cifra</text>
+                            <text id="band2-value" x="76" y="22" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
+                            <text x="101" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Moltiplic.</text>
+                            <text id="band3-value" x="101" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">×10</text>
                             <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
+                            <text id="band4-value" x="151" y="127" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">±5%</text>
                         </svg>
                     </div>
                 </div>
@@ -422,6 +426,10 @@
         const band2 = document.getElementById('band2');
         const band3 = document.getElementById('band3');
         const band4 = document.getElementById('band4');
+        const band1Value = document.getElementById('band1-value');
+        const band2Value = document.getElementById('band2-value');
+        const band3Value = document.getElementById('band3-value');
+        const band4Value = document.getElementById('band4-value');
 
         // Result displays
         const resultCurrent = document.getElementById('result-current');
@@ -438,6 +446,10 @@
                 band2.setAttribute('fill', '#000000');
                 band3.setAttribute('fill', '#000000');
                 band4.setAttribute('fill', '#FFD700');
+                band1Value.textContent = '0';
+                band2Value.textContent = '0';
+                band3Value.textContent = '×1';
+                band4Value.textContent = '±5%';
                 return;
             }
 
@@ -489,6 +501,24 @@
             }
             // Band 4 is always gold for tolerance (±5%)
             band4.setAttribute('fill', '#FFD700');
+            
+            // Update the value labels
+            band1Value.textContent = firstDigit.toString();
+            band2Value.textContent = secondDigit.toString();
+            
+            // Format multiplier text
+            let multiplierText;
+            if (multiplier >= 1000000) {
+                multiplierText = '×' + (multiplier / 1000000) + 'M';
+            } else if (multiplier >= 1000) {
+                multiplierText = '×' + (multiplier / 1000) + 'k';
+            } else if (multiplier < 1) {
+                multiplierText = '×' + multiplier;
+            } else {
+                multiplierText = '×' + multiplier;
+            }
+            band3Value.textContent = multiplierText;
+            band4Value.textContent = '±5%';
         }
 
         // Calculate circuit values
