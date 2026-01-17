@@ -254,17 +254,27 @@
                     </div>
                     <div id="resistor-color-code" style="margin-top: 15px;">
                         <div style="margin-bottom: 10px; font-weight: 500; color: #555;">Codice Colore:</div>
-                        <svg width="200" height="80" viewBox="0 0 200 80">
+                        <svg width="200" height="140" viewBox="0 0 200 140">
                             <!-- Resistor body -->
-                            <rect x="20" y="25" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
+                            <rect x="20" y="55" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
                             <!-- Wire leads -->
-                            <line x1="0" y1="40" x2="20" y2="40" stroke="#999" stroke-width="2"/>
-                            <line x1="180" y1="40" x2="200" y2="40" stroke="#999" stroke-width="2"/>
+                            <line x1="0" y1="70" x2="20" y2="70" stroke="#999" stroke-width="2"/>
+                            <line x1="180" y1="70" x2="200" y2="70" stroke="#999" stroke-width="2"/>
                             <!-- Color bands -->
-                            <rect id="band1" x="45" y="25" width="12" height="30" fill="#000000"/>
-                            <rect id="band2" x="70" y="25" width="12" height="30" fill="#000000"/>
-                            <rect id="band3" x="95" y="25" width="12" height="30" fill="#000000"/>
-                            <rect id="band4" x="145" y="25" width="12" height="30" fill="#FFD700"/>
+                            <rect id="band1" x="45" y="55" width="12" height="30" fill="#000000"/>
+                            <rect id="band2" x="70" y="55" width="12" height="30" fill="#000000"/>
+                            <rect id="band3" x="95" y="55" width="12" height="30" fill="#000000"/>
+                            <rect id="band4" x="145" y="55" width="12" height="30" fill="#FFD700"/>
+                            <!-- Callout lines -->
+                            <line x1="51" y1="55" x2="51" y2="35" stroke="#666" stroke-width="1"/>
+                            <line x1="76" y1="55" x2="76" y2="25" stroke="#666" stroke-width="1"/>
+                            <line x1="101" y1="55" x2="101" y2="35" stroke="#666" stroke-width="1"/>
+                            <line x1="151" y1="85" x2="151" y2="105" stroke="#666" stroke-width="1"/>
+                            <!-- Callout labels -->
+                            <text x="51" y="30" text-anchor="middle" font-size="10" fill="#555" font-weight="500">1ª cifra</text>
+                            <text x="76" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">2ª cifra</text>
+                            <text x="101" y="30" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Moltiplic.</text>
+                            <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
                         </svg>
                     </div>
                 </div>
@@ -555,11 +565,11 @@
 
             // Update results
             const currentMA = current * 1000;
-            resultCurrent.textContent = currentMA.toFixed(2) + ' mA (' + current.toFixed(3) + ' A)';
+            resultCurrent.textContent = currentMA.toFixed(2) + ' mA';
             resultLedVoltage.textContent = led.forwardVoltage.toFixed(1) + ' V';
             resultResistorVoltage.textContent = voltageAcrossResistor.toFixed(2) + ' V';
-            resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW (' + powerResistor.toFixed(3) + ' W)';
-            resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW (' + powerLed.toFixed(3) + ' W)';
+            resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW';
+            resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW';
             currentLabel.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
 
             // Display warning if any
