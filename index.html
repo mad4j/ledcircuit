@@ -192,44 +192,44 @@
                     </g>
 
                     <!-- Wire from battery to resistor -->
-                    <line x1="110" y1="200" x2="150" y2="200" stroke="#333" stroke-width="3"/>
+                    <line x1="110" y1="200" x2="140" y2="200" stroke="#333" stroke-width="3"/>
 
-                    <!-- Resistor -->
+                    <!-- Resistor (moved upstream before LED) -->
                     <g id="resistor">
-                        <path d="M 150 200 L 160 195 L 170 205 L 180 195 L 190 205 L 200 195 L 210 205 L 220 200" 
+                        <path d="M 140 200 L 150 195 L 160 205 L 170 195 L 180 205 L 190 195 L 200 205 L 210 200" 
                               stroke="#333" stroke-width="3" fill="none"/>
-                        <rect x="155" y="185" width="60" height="30" fill="#f4a460" opacity="0.3" stroke="#333" stroke-width="1"/>
-                        <text x="185" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Resistenza</text>
-                        <text x="185" y="260" text-anchor="middle" font-size="14" fill="#666" id="resistor-label">330Ω</text>
+                        <rect x="145" y="185" width="60" height="30" fill="#f4a460" opacity="0.3" stroke="#333" stroke-width="1"/>
+                        <text x="175" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Resistenza</text>
+                        <text x="175" y="260" text-anchor="middle" font-size="14" fill="#666" id="resistor-label">330Ω</text>
                     </g>
 
                     <!-- Wire from resistor to LED -->
-                    <line x1="220" y1="200" x2="260" y2="200" stroke="#333" stroke-width="3"/>
+                    <line x1="210" y1="200" x2="240" y2="200" stroke="#333" stroke-width="3"/>
 
-                    <!-- LED -->
+                    <!-- LED (moved downstream after resistor) -->
                     <g id="led">
-                        <circle cx="280" cy="200" r="20" id="led-circle" fill="#ff0000" opacity="0.7" stroke="#333" stroke-width="2"/>
-                        <path d="M 270 200 L 280 195 L 280 205 Z" fill="#333"/>
-                        <line x1="280" y1="195" x2="280" y2="205" stroke="#333" stroke-width="2"/>
-                        <line x1="285" y1="188" x2="295" y2="178" stroke="#ffeb3b" stroke-width="2" id="light-ray-1"/>
-                        <line x1="285" y1="212" x2="295" y2="222" stroke="#ffeb3b" stroke-width="2" id="light-ray-2"/>
-                        <polygon points="295,178 298,178 296,174" fill="#ffeb3b" id="light-arrow-1"/>
-                        <polygon points="295,222 298,222 296,226" fill="#ffeb3b" id="light-arrow-2"/>
-                        <text x="280" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">LED</text>
-                        <text x="280" y="260" text-anchor="middle" font-size="14" fill="#666" id="led-label">Rosso</text>
+                        <circle cx="260" cy="200" r="20" id="led-circle" fill="#ff0000" opacity="0.7" stroke="#333" stroke-width="2"/>
+                        <path d="M 250 200 L 260 195 L 260 205 Z" fill="#333"/>
+                        <line x1="260" y1="195" x2="260" y2="205" stroke="#333" stroke-width="2"/>
+                        <line x1="265" y1="188" x2="275" y2="178" stroke="#ffeb3b" stroke-width="2" id="light-ray-1"/>
+                        <line x1="265" y1="212" x2="275" y2="222" stroke="#ffeb3b" stroke-width="2" id="light-ray-2"/>
+                        <polygon points="275,178 278,178 276,174" fill="#ffeb3b" id="light-arrow-1"/>
+                        <polygon points="275,222 278,222 276,226" fill="#ffeb3b" id="light-arrow-2"/>
+                        <text x="260" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">LED</text>
+                        <text x="260" y="260" text-anchor="middle" font-size="14" fill="#666" id="led-label">Rosso</text>
                     </g>
 
                     <!-- Wire from LED back to battery (completing circuit) -->
-                    <line x1="300" y1="200" x2="350" y2="200" stroke="#333" stroke-width="3"/>
+                    <line x1="280" y1="200" x2="350" y2="200" stroke="#333" stroke-width="3"/>
                     <line x1="350" y1="200" x2="350" y2="100" stroke="#333" stroke-width="3"/>
                     <line x1="350" y1="100" x2="50" y2="100" stroke="#333" stroke-width="3"/>
                     <line x1="50" y1="100" x2="50" y2="200" stroke="#333" stroke-width="3"/>
 
                     <!-- Current direction arrows -->
                     <g id="current-arrows">
-                        <polygon points="130,200 135,197 135,203" fill="#2196f3"/>
-                        <polygon points="240,200 245,197 245,203" fill="#2196f3"/>
-                        <polygon points="325,200 330,197 330,203" fill="#2196f3"/>
+                        <polygon points="125,200 130,197 130,203" fill="#2196f3"/>
+                        <polygon points="225,200 230,197 230,203" fill="#2196f3"/>
+                        <polygon points="315,200 320,197 320,203" fill="#2196f3"/>
                         <polygon points="350,150 347,145 353,145" fill="#2196f3"/>
                         <polygon points="200,100 197,95 203,95" fill="#2196f3"/>
                         <text x="200" y="85" text-anchor="middle" font-size="14" fill="#2196f3" font-weight="bold" id="current-label">I = 20mA</text>
@@ -252,6 +252,21 @@
                         <label for="resistance">Resistenza (Ω):</label>
                         <input type="number" id="resistance" min="0" max="10000" step="10" value="330">
                     </div>
+                    <div id="resistor-color-code" style="margin-top: 15px;">
+                        <div style="margin-bottom: 10px; font-weight: 500; color: #555;">Codice Colore:</div>
+                        <svg width="200" height="80" viewBox="0 0 200 80">
+                            <!-- Resistor body -->
+                            <rect x="20" y="25" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
+                            <!-- Wire leads -->
+                            <line x1="0" y1="40" x2="20" y2="40" stroke="#999" stroke-width="2"/>
+                            <line x1="180" y1="40" x2="200" y2="40" stroke="#999" stroke-width="2"/>
+                            <!-- Color bands -->
+                            <rect id="band1" x="45" y="25" width="12" height="30" fill="#000000"/>
+                            <rect id="band2" x="70" y="25" width="12" height="30" fill="#000000"/>
+                            <rect id="band3" x="95" y="25" width="12" height="30" fill="#000000"/>
+                            <rect id="band4" x="145" y="25" width="12" height="30" fill="#FFD700"/>
+                        </svg>
+                    </div>
                 </div>
 
                 <div class="control-group">
@@ -265,6 +280,14 @@
                             <option value="yellow">Giallo</option>
                             <option value="white">Bianco</option>
                         </select>
+                    </div>
+                    <div id="led-characteristics" style="margin-top: 15px; padding: 10px; background: #e8eaf6; border-radius: 5px; font-size: 0.9em;">
+                        <div style="margin-bottom: 5px;"><strong>Caratteristiche LED:</strong></div>
+                        <div style="margin-left: 10px;">
+                            <div>• Tensione diretta: <span id="led-forward-voltage">2.0 V</span></div>
+                            <div>• Corrente massima: <span id="led-max-current">30 mA</span></div>
+                            <div>• Corrente tipica: <span id="led-typical-current">20 mA</span></div>
+                        </div>
                     </div>
                 </div>
 
@@ -341,6 +364,33 @@
             }
         };
 
+        // Resistor color code database
+        const colorCodes = {
+            0: { name: 'Nero', color: '#000000' },
+            1: { name: 'Marrone', color: '#8B4513' },
+            2: { name: 'Rosso', color: '#FF0000' },
+            3: { name: 'Arancione', color: '#FFA500' },
+            4: { name: 'Giallo', color: '#FFFF00' },
+            5: { name: 'Verde', color: '#008000' },
+            6: { name: 'Blu', color: '#0000FF' },
+            7: { name: 'Viola', color: '#9400D3' },
+            8: { name: 'Grigio', color: '#808080' },
+            9: { name: 'Bianco', color: '#FFFFFF' }
+        };
+
+        const multiplierCodes = {
+            0.01: { name: 'Argento', color: '#C0C0C0' },
+            0.1: { name: 'Oro', color: '#FFD700' },
+            1: { name: 'Nero', color: '#000000' },
+            10: { name: 'Marrone', color: '#8B4513' },
+            100: { name: 'Rosso', color: '#FF0000' },
+            1000: { name: 'Arancione', color: '#FFA500' },
+            10000: { name: 'Giallo', color: '#FFFF00' },
+            100000: { name: 'Verde', color: '#008000' },
+            1000000: { name: 'Blu', color: '#0000FF' },
+            10000000: { name: 'Viola', color: '#9400D3' }
+        };
+
         // Get DOM elements
         const voltageInput = document.getElementById('voltage');
         const voltageDisplay = document.getElementById('voltage-display');
@@ -355,6 +405,13 @@
         const lightRay2 = document.getElementById('light-ray-2');
         const lightArrow1 = document.getElementById('light-arrow-1');
         const lightArrow2 = document.getElementById('light-arrow-2');
+        const ledForwardVoltage = document.getElementById('led-forward-voltage');
+        const ledMaxCurrent = document.getElementById('led-max-current');
+        const ledTypicalCurrent = document.getElementById('led-typical-current');
+        const band1 = document.getElementById('band1');
+        const band2 = document.getElementById('band2');
+        const band3 = document.getElementById('band3');
+        const band4 = document.getElementById('band4');
 
         // Result displays
         const resultCurrent = document.getElementById('result-current');
@@ -363,6 +420,63 @@
         const resultPower = document.getElementById('result-power');
         const resultLedPower = document.getElementById('result-led-power');
         const warningMessage = document.getElementById('warning-message');
+
+        // Function to update resistor color bands
+        function updateResistorColorBands(resistance) {
+            if (resistance <= 0) {
+                band1.setAttribute('fill', '#000000');
+                band2.setAttribute('fill', '#000000');
+                band3.setAttribute('fill', '#000000');
+                band4.setAttribute('fill', '#FFD700');
+                return;
+            }
+
+            // Find the appropriate representation
+            let firstDigit, secondDigit, multiplier;
+            
+            // Convert resistance to a format we can work with
+            let resistanceValue = resistance;
+            
+            // Find multiplier and significant digits
+            multiplier = 1;
+            while (resistanceValue >= 100 && multiplier < 10000000) {
+                resistanceValue /= 10;
+                multiplier *= 10;
+            }
+            
+            // Handle special cases for values less than 10
+            if (resistance < 10) {
+                firstDigit = Math.floor(resistance);
+                secondDigit = Math.floor((resistance * 10) % 10);
+                multiplier = 0.1;
+            } else if (resistance < 100) {
+                firstDigit = Math.floor(resistance / 10);
+                secondDigit = Math.floor(resistance % 10);
+                multiplier = 1;
+            } else {
+                // Round to 2 significant digits
+                let significantValue = Math.round(resistanceValue);
+                firstDigit = Math.floor(significantValue / 10);
+                secondDigit = significantValue % 10;
+            }
+            
+            // Ensure digits are in valid range (0-9)
+            firstDigit = Math.min(9, Math.max(0, firstDigit));
+            secondDigit = Math.min(9, Math.max(0, secondDigit));
+            
+            // Update the color bands
+            if (colorCodes[firstDigit]) {
+                band1.setAttribute('fill', colorCodes[firstDigit].color);
+            }
+            if (colorCodes[secondDigit]) {
+                band2.setAttribute('fill', colorCodes[secondDigit].color);
+            }
+            if (multiplierCodes[multiplier]) {
+                band3.setAttribute('fill', multiplierCodes[multiplier].color);
+            }
+            // Band 4 is always gold for tolerance (±5%)
+            band4.setAttribute('fill', '#FFD700');
+        }
 
         // Calculate circuit values
         function calculateCircuit() {
@@ -376,6 +490,14 @@
             batteryLabel.textContent = voltage.toFixed(1) + 'V';
             resistorLabel.textContent = resistance + 'Ω';
             ledLabel.textContent = led.name;
+
+            // Update LED characteristics display
+            ledForwardVoltage.textContent = led.forwardVoltage.toFixed(1) + ' V';
+            ledMaxCurrent.textContent = led.maxCurrent + ' mA';
+            ledTypicalCurrent.textContent = led.typicalCurrent + ' mA';
+
+            // Update resistor color bands
+            updateResistorColorBands(resistance);
 
             // Update LED color
             ledCircle.setAttribute('fill', led.color);
@@ -430,11 +552,11 @@
 
             // Update results
             const currentMA = current * 1000;
-            resultCurrent.textContent = currentMA.toFixed(2) + ' mA';
+            resultCurrent.textContent = currentMA.toFixed(2) + ' mA (' + current.toFixed(3) + ' A)';
             resultLedVoltage.textContent = led.forwardVoltage.toFixed(1) + ' V';
             resultResistorVoltage.textContent = voltageAcrossResistor.toFixed(2) + ' V';
-            resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW';
-            resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW';
+            resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW (' + powerResistor.toFixed(3) + ' W)';
+            resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW (' + powerLed.toFixed(3) + ' W)';
             currentLabel.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
 
             // Display warning if any
