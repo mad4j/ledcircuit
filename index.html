@@ -75,6 +75,28 @@
             border-radius: 10px;
         }
 
+        .resistor-panel-layout {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+
+        .resistor-panel-layout .resistor-input {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .resistor-panel-layout .resistor-visual {
+            flex: 0 0 auto;
+        }
+
+        .resistor-panel-layout .resistor-visual svg {
+            display: block;
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+        }
+
         .control-group h3 {
             margin-bottom: 10px;
             color: #555;
@@ -216,6 +238,10 @@
             #circuit-svg {
                 max-height: 280px;
             }
+
+            .resistor-panel-layout {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -326,7 +352,6 @@
                         </datalist>
                     </div>
                     <div id="battery-info" style="margin-top: 15px; padding: 15px; background: #fff3cd; border-radius: 8px; border: 2px solid #ffc107;">
-                        <div style="font-weight: bold; margin-bottom: 10px; color: #856404;">Tipi di batteria utilizzabili:</div>
                         <div id="battery-types" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                             <!-- Le icone delle batterie verranno inserite dinamicamente -->
                         </div>
@@ -335,13 +360,15 @@
 
                 <div class="control-group">
                     <h3>🔧 Resistenza</h3>
-                    <div class="input-group">
-                        <label for="resistance">Resistenza (Ω):</label>
-                        <input type="number" id="resistance" min="0" max="10000" step="10" value="330">
-                    </div>
-                    <div id="resistor-color-code" style="margin-top: 15px;">
-                        <div style="margin-bottom: 10px; font-weight: 500; color: #555;">Codice Colore:</div>
-                        <svg width="200" height="140" viewBox="0 0 200 140">
+                    <div class="resistor-panel-layout">
+                        <div class="resistor-input">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <label for="resistance">Resistenza (Ω):</label>
+                                <input type="number" id="resistance" min="0" max="10000" step="10" value="330">
+                            </div>
+                        </div>
+                        <div class="resistor-visual" id="resistor-color-code">
+                            <svg width="200" height="140" viewBox="0 0 200 140">
                             <!-- Resistor body -->
                             <rect x="20" y="55" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
                             <!-- Wire leads -->
@@ -366,7 +393,8 @@
                             <text id="band3-value" x="101" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">×10</text>
                             <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
                             <text id="band4-value" x="151" y="127" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">±5%</text>
-                        </svg>
+                            </svg>
+                        </div>
                     </div>
                 </div>
 
