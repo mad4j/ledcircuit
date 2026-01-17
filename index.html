@@ -439,7 +439,7 @@
             
             // Find multiplier and significant digits
             multiplier = 1;
-            while (resistanceValue >= 100 && multiplier < 10000000) {
+            while (resistanceValue >= 100 && multiplier <= 1000000) {
                 resistanceValue /= 10;
                 multiplier *= 10;
             }
@@ -473,6 +473,9 @@
             }
             if (multiplierCodes[multiplier]) {
                 band3.setAttribute('fill', multiplierCodes[multiplier].color);
+            } else {
+                // Fallback to black if multiplier not found
+                band3.setAttribute('fill', '#000000');
             }
             // Band 4 is always gold for tolerance (±5%)
             band4.setAttribute('fill', '#FFD700');
