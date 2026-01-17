@@ -244,7 +244,7 @@
                         <!-- Callout after LED -->
                         <line x1="210" y1="200" x2="210" y2="155" stroke="#2196f3" stroke-width="1" stroke-dasharray="2,2"/>
                         <text x="210" y="145" text-anchor="middle" font-size="11" fill="#2196f3" font-weight="bold" id="callout-after-led-line1">I = 20mA</text>
-                        <text x="210" y="158" text-anchor="middle" font-size="10" fill="#2196f3" id="callout-after-led-line2">V ridotta di 2.0V</text>
+                        <text x="210" y="158" text-anchor="middle" font-size="10" fill="#2196f3" id="callout-after-led-line2">V rimanente: 7.0V</text>
                         
                         <!-- Callout after resistor -->
                         <line x1="310" y1="200" x2="310" y2="155" stroke="#2196f3" stroke-width="1" stroke-dasharray="2,2"/>
@@ -599,7 +599,8 @@
             // Update callouts
             calloutAfterBattery.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
             calloutAfterLedLine1.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
-            calloutAfterLedLine2.textContent = 'V ridotta di ' + led.forwardVoltage.toFixed(1) + 'V';
+            const voltageAfterLed = voltage - led.forwardVoltage;
+            calloutAfterLedLine2.textContent = 'V rimanente: ' + voltageAfterLed.toFixed(1) + 'V';
             calloutAfterResistorLine1.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
             // After resistor, voltage should be ~0V (ground)
             calloutAfterResistorLine2.textContent = 'V ≈ 0.0V (ritorno a GND)';
