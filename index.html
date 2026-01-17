@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circuito LED Interattivo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 1200px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .circuit-display {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .control-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .control-group h3 {
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 1.2em;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .input-group input[type="number"],
+        .input-group input[type="range"],
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .input-group input[type="range"] {
+            padding: 0;
+        }
+
+        .value-display {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .results {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #b3d4fc;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: #1976d2;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .led-preview {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 10px;
+            border: 2px solid #333;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: #856404;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 2px solid #dc3545;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ Circuito LED Interattivo</h1>
+        
+        <div class="content">
+            <div class="circuit-display">
+                <svg id="circuit-svg" width="400" height="400" viewBox="0 0 400 400">
+                    <!-- Battery -->
+                    <g id="battery">
+                        <line x1="50" y1="200" x2="100" y2="200" stroke="#333" stroke-width="3"/>
+                        <line x1="100" y1="180" x2="100" y2="220" stroke="#333" stroke-width="5"/>
+                        <line x1="110" y1="190" x2="110" y2="210" stroke="#333" stroke-width="5"/>
+                        <text x="75" y="170" text-anchor="middle" font-size="14" fill="#333">+</text>
+                        <text x="75" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Batteria</text>
+                        <text x="75" y="260" text-anchor="middle" font-size="14" fill="#666" id="battery-label">9V</text>
+                    </g>
+
+                    <!-- Wire from battery to resistor -->
+                    <line x1="110" y1="200" x2="150" y2="200" stroke="#333" stroke-width="3"/>
+
+                    <!-- Resistor -->
+                    <g id="resistor">
+                        <path d="M 150 200 L 160 195 L 170 205 L 180 195 L 190 205 L 200 195 L 210 205 L 220 200" 
+                              stroke="#333" stroke-width="3" fill="none"/>
+                        <rect x="155" y="185" width="60" height="30" fill="#f4a460" opacity="0.3" stroke="#333" stroke-width="1"/>
+                        <text x="185" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Resistenza</text>
+                        <text x="185" y="260" text-anchor="middle" font-size="14" fill="#666" id="resistor-label">330Ω</text>
+                    </g>
+
+                    <!-- Wire from resistor to LED -->
+                    <line x1="220" y1="200" x2="260" y2="200" stroke="#333" stroke-width="3"/>
+
+                    <!-- LED -->
+                    <g id="led">
+                        <circle cx="280" cy="200" r="20" id="led-circle" fill="#ff0000" opacity="0.7" stroke="#333" stroke-width="2"/>
+                        <path d="M 270 200 L 280 195 L 280 205 Z" fill="#333"/>
+                        <line x1="280" y1="195" x2="280" y2="205" stroke="#333" stroke-width="2"/>
+                        <line x1="285" y1="188" x2="295" y2="178" stroke="#ffeb3b" stroke-width="2" id="light-ray-1"/>
+                        <line x1="285" y1="212" x2="295" y2="222" stroke="#ffeb3b" stroke-width="2" id="light-ray-2"/>
+                        <polygon points="295,178 298,178 296,174" fill="#ffeb3b" id="light-arrow-1"/>
+                        <polygon points="295,222 298,222 296,226" fill="#ffeb3b" id="light-arrow-2"/>
+                        <text x="280" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">LED</text>
+                        <text x="280" y="260" text-anchor="middle" font-size="14" fill="#666" id="led-label">Rosso</text>
+                    </g>
+
+                    <!-- Wire from LED back to battery (completing circuit) -->
+                    <line x1="300" y1="200" x2="350" y2="200" stroke="#333" stroke-width="3"/>
+                    <line x1="350" y1="200" x2="350" y2="100" stroke="#333" stroke-width="3"/>
+                    <line x1="350" y1="100" x2="50" y2="100" stroke="#333" stroke-width="3"/>
+                    <line x1="50" y1="100" x2="50" y2="200" stroke="#333" stroke-width="3"/>
+
+                    <!-- Current direction arrows -->
+                    <g id="current-arrows">
+                        <polygon points="130,200 135,197 135,203" fill="#2196f3"/>
+                        <polygon points="240,200 245,197 245,203" fill="#2196f3"/>
+                        <polygon points="325,200 330,197 330,203" fill="#2196f3"/>
+                        <polygon points="350,150 347,145 353,145" fill="#2196f3"/>
+                        <polygon points="200,100 197,95 203,95" fill="#2196f3"/>
+                        <text x="200" y="85" text-anchor="middle" font-size="14" fill="#2196f3" font-weight="bold" id="current-label">I = 20mA</text>
+                    </g>
+                </svg>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <h3>⚡ Batteria</h3>
+                    <div class="input-group">
+                        <label for="voltage">Tensione (V): <span class="value-display" id="voltage-display">9</span></label>
+                        <input type="range" id="voltage" min="3" max="12" step="0.5" value="9">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>🔧 Resistenza</h3>
+                    <div class="input-group">
+                        <label for="resistance">Resistenza (Ω):</label>
+                        <input type="number" id="resistance" min="0" max="10000" step="10" value="330">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <h3>💡 LED</h3>
+                    <div class="input-group">
+                        <label for="led-color">Colore LED:</label>
+                        <select id="led-color">
+                            <option value="red">Rosso</option>
+                            <option value="green">Verde</option>
+                            <option value="blue">Blu</option>
+                            <option value="yellow">Giallo</option>
+                            <option value="white">Bianco</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="results">
+                    <h3 style="margin-bottom: 15px;">📊 Risultati Calcolo</h3>
+                    <div class="result-item">
+                        <span class="result-label">Corrente nel circuito:</span>
+                        <span class="result-value" id="result-current">20.00 mA</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tensione sul LED:</span>
+                        <span class="result-value" id="result-led-voltage">2.0 V</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tensione sulla resistenza:</span>
+                        <span class="result-value" id="result-resistor-voltage">7.0 V</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Potenza dissipata (resistenza):</span>
+                        <span class="result-value" id="result-power">140 mW</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Potenza LED:</span>
+                        <span class="result-value" id="result-led-power">40 mW</span>
+                    </div>
+                    <div id="warning-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // LED characteristics database
+        const ledDatabase = {
+            red: {
+                name: 'Rosso',
+                forwardVoltage: 2.0,
+                maxCurrent: 30,
+                typicalCurrent: 20,
+                color: '#ff0000',
+                lightColor: '#ffeb3b'
+            },
+            green: {
+                name: 'Verde',
+                forwardVoltage: 2.2,
+                maxCurrent: 30,
+                typicalCurrent: 20,
+                color: '#00ff00',
+                lightColor: '#ffeb3b'
+            },
+            blue: {
+                name: 'Blu',
+                forwardVoltage: 3.2,
+                maxCurrent: 30,
+                typicalCurrent: 20,
+                color: '#0000ff',
+                lightColor: '#add8e6'
+            },
+            yellow: {
+                name: 'Giallo',
+                forwardVoltage: 2.1,
+                maxCurrent: 30,
+                typicalCurrent: 20,
+                color: '#ffff00',
+                lightColor: '#ffeb3b'
+            },
+            white: {
+                name: 'Bianco',
+                forwardVoltage: 3.3,
+                maxCurrent: 30,
+                typicalCurrent: 20,
+                color: '#ffffff',
+                lightColor: '#ffffff'
+            }
+        };
+
+        // Get DOM elements
+        const voltageInput = document.getElementById('voltage');
+        const voltageDisplay = document.getElementById('voltage-display');
+        const resistanceInput = document.getElementById('resistance');
+        const ledColorSelect = document.getElementById('led-color');
+        const ledCircle = document.getElementById('led-circle');
+        const ledLabel = document.getElementById('led-label');
+        const batteryLabel = document.getElementById('battery-label');
+        const resistorLabel = document.getElementById('resistor-label');
+        const currentLabel = document.getElementById('current-label');
+        const lightRay1 = document.getElementById('light-ray-1');
+        const lightRay2 = document.getElementById('light-ray-2');
+        const lightArrow1 = document.getElementById('light-arrow-1');
+        const lightArrow2 = document.getElementById('light-arrow-2');
+
+        // Result displays
+        const resultCurrent = document.getElementById('result-current');
+        const resultLedVoltage = document.getElementById('result-led-voltage');
+        const resultResistorVoltage = document.getElementById('result-resistor-voltage');
+        const resultPower = document.getElementById('result-power');
+        const resultLedPower = document.getElementById('result-led-power');
+        const warningMessage = document.getElementById('warning-message');
+
+        // Calculate circuit values
+        function calculateCircuit() {
+            const voltage = parseFloat(voltageInput.value);
+            const resistance = parseFloat(resistanceInput.value);
+            const ledColor = ledColorSelect.value;
+            const led = ledDatabase[ledColor];
+
+            // Update display labels
+            voltageDisplay.textContent = voltage.toFixed(1);
+            batteryLabel.textContent = voltage.toFixed(1) + 'V';
+            resistorLabel.textContent = resistance + 'Ω';
+            ledLabel.textContent = led.name;
+
+            // Update LED color
+            ledCircle.setAttribute('fill', led.color);
+            ledCircle.style.filter = 'brightness(1.2)';
+            lightRay1.setAttribute('stroke', led.lightColor);
+            lightRay2.setAttribute('stroke', led.lightColor);
+            lightArrow1.setAttribute('fill', led.lightColor);
+            lightArrow2.setAttribute('fill', led.lightColor);
+
+            // Calculate using Ohm's law: V = I * R
+            // V_source = V_led + V_resistor
+            // V_source = V_led + (I * R)
+            // I = (V_source - V_led) / R
+            
+            const voltageAcrossResistor = voltage - led.forwardVoltage;
+            
+            let current, warning;
+
+            if (resistance <= 0) {
+                warning = '<div class="error">⚠️ ERRORE: La resistenza deve essere maggiore di 0Ω per evitare di danneggiare il LED!</div>';
+                current = 0;
+                resultCurrent.textContent = 'N/A';
+                resultLedVoltage.textContent = 'N/A';
+                resultResistorVoltage.textContent = 'N/A';
+                resultPower.textContent = 'N/A';
+                resultLedPower.textContent = 'N/A';
+                currentLabel.textContent = 'I = N/A';
+                warningMessage.innerHTML = warning;
+                return;
+            }
+
+            if (voltageAcrossResistor < 0) {
+                warning = '<div class="error">⚠️ ERRORE: La tensione della batteria (' + voltage.toFixed(1) + 'V) è inferiore alla tensione diretta del LED (' + led.forwardVoltage.toFixed(1) + 'V). Il LED non si accenderà!</div>';
+                current = 0;
+            } else {
+                current = voltageAcrossResistor / resistance; // in Amperes
+                const currentMA = current * 1000; // convert to milliamperes
+
+                // Check if current is too high
+                if (currentMA > led.maxCurrent) {
+                    warning = '<div class="warning">⚠️ ATTENZIONE: La corrente (' + currentMA.toFixed(2) + ' mA) supera la corrente massima del LED (' + led.maxCurrent + ' mA). Aumentare la resistenza!</div>';
+                } else if (currentMA < 1) {
+                    warning = '<div class="warning">⚠️ ATTENZIONE: La corrente è molto bassa (' + currentMA.toFixed(2) + ' mA). Il LED potrebbe essere poco luminoso.</div>';
+                } else {
+                    warning = '';
+                }
+            }
+
+            // Calculate power dissipation
+            const powerResistor = Math.pow(current, 2) * resistance; // P = I^2 * R
+            const powerLed = current * led.forwardVoltage; // P = I * V
+
+            // Update results
+            const currentMA = current * 1000;
+            resultCurrent.textContent = currentMA.toFixed(2) + ' mA';
+            resultLedVoltage.textContent = led.forwardVoltage.toFixed(1) + ' V';
+            resultResistorVoltage.textContent = voltageAcrossResistor.toFixed(2) + ' V';
+            resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW';
+            resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW';
+            currentLabel.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
+
+            // Display warning if any
+            warningMessage.innerHTML = warning;
+
+            // Adjust LED brightness based on current
+            const brightness = Math.min(currentMA / led.typicalCurrent, 2);
+            ledCircle.style.opacity = Math.min(0.3 + brightness * 0.5, 1);
+            
+            if (currentMA > 0.5) {
+                lightRay1.style.display = 'block';
+                lightRay2.style.display = 'block';
+                lightArrow1.style.display = 'block';
+                lightArrow2.style.display = 'block';
+                lightRay1.style.opacity = Math.min(brightness * 0.8, 1);
+                lightRay2.style.opacity = Math.min(brightness * 0.8, 1);
+                lightArrow1.style.opacity = Math.min(brightness * 0.8, 1);
+                lightArrow2.style.opacity = Math.min(brightness * 0.8, 1);
+            } else {
+                lightRay1.style.display = 'none';
+                lightRay2.style.display = 'none';
+                lightArrow1.style.display = 'none';
+                lightArrow2.style.display = 'none';
+            }
+        }
+
+        // Event listeners
+        voltageInput.addEventListener('input', calculateCircuit);
+        resistanceInput.addEventListener('input', calculateCircuit);
+        ledColorSelect.addEventListener('change', calculateCircuit);
+
+        // Initial calculation
+        calculateCircuit();
+    </script>
+</body>
+</html>
