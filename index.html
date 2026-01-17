@@ -191,36 +191,36 @@
                         <text x="75" y="260" text-anchor="middle" font-size="14" fill="#666" id="battery-label">9V</text>
                     </g>
 
-                    <!-- Wire from battery to resistor -->
+                    <!-- Wire from battery to LED -->
                     <line x1="110" y1="200" x2="140" y2="200" stroke="#333" stroke-width="3"/>
 
-                    <!-- Resistor (moved upstream before LED) -->
-                    <g id="resistor">
-                        <path d="M 140 200 L 150 195 L 160 205 L 170 195 L 180 205 L 190 195 L 200 205 L 210 200" 
-                              stroke="#333" stroke-width="3" fill="none"/>
-                        <rect x="145" y="185" width="60" height="30" fill="#f4a460" opacity="0.3" stroke="#333" stroke-width="1"/>
-                        <text x="175" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Resistenza</text>
-                        <text x="175" y="260" text-anchor="middle" font-size="14" fill="#666" id="resistor-label">330Ω</text>
-                    </g>
-
-                    <!-- Wire from resistor to LED -->
-                    <line x1="210" y1="200" x2="240" y2="200" stroke="#333" stroke-width="3"/>
-
-                    <!-- LED (moved downstream after resistor) -->
+                    <!-- LED (moved upstream after battery) -->
                     <g id="led">
-                        <circle cx="260" cy="200" r="20" id="led-circle" fill="#ff0000" opacity="0.7" stroke="#333" stroke-width="2"/>
-                        <path d="M 250 200 L 260 195 L 260 205 Z" fill="#333"/>
-                        <line x1="260" y1="195" x2="260" y2="205" stroke="#333" stroke-width="2"/>
-                        <line x1="265" y1="188" x2="275" y2="178" stroke="#ffeb3b" stroke-width="2" id="light-ray-1"/>
-                        <line x1="265" y1="212" x2="275" y2="222" stroke="#ffeb3b" stroke-width="2" id="light-ray-2"/>
-                        <polygon points="275,178 278,178 276,174" fill="#ffeb3b" id="light-arrow-1"/>
-                        <polygon points="275,222 278,222 276,226" fill="#ffeb3b" id="light-arrow-2"/>
-                        <text x="260" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">LED</text>
-                        <text x="260" y="260" text-anchor="middle" font-size="14" fill="#666" id="led-label">Rosso</text>
+                        <circle cx="175" cy="200" r="20" id="led-circle" fill="#ff0000" opacity="0.7" stroke="#333" stroke-width="2"/>
+                        <path d="M 165 200 L 175 195 L 175 205 Z" fill="#333"/>
+                        <line x1="175" y1="195" x2="175" y2="205" stroke="#333" stroke-width="2"/>
+                        <line x1="180" y1="188" x2="190" y2="178" stroke="#ffeb3b" stroke-width="2" id="light-ray-1"/>
+                        <line x1="180" y1="212" x2="190" y2="222" stroke="#ffeb3b" stroke-width="2" id="light-ray-2"/>
+                        <polygon points="190,178 193,178 191,174" fill="#ffeb3b" id="light-arrow-1"/>
+                        <polygon points="190,222 193,222 191,226" fill="#ffeb3b" id="light-arrow-2"/>
+                        <text x="175" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">LED</text>
+                        <text x="175" y="260" text-anchor="middle" font-size="14" fill="#666" id="led-label">Rosso</text>
                     </g>
 
-                    <!-- Wire from LED back to battery (completing circuit) -->
-                    <line x1="280" y1="200" x2="350" y2="200" stroke="#333" stroke-width="3"/>
+                    <!-- Wire from LED to resistor -->
+                    <line x1="195" y1="200" x2="225" y2="200" stroke="#333" stroke-width="3"/>
+
+                    <!-- Resistor (moved downstream after LED) -->
+                    <g id="resistor">
+                        <path d="M 225 200 L 235 195 L 245 205 L 255 195 L 265 205 L 275 195 L 285 205 L 295 200" 
+                              stroke="#333" stroke-width="3" fill="none"/>
+                        <rect x="230" y="185" width="60" height="30" fill="#f4a460" opacity="0.3" stroke="#333" stroke-width="1"/>
+                        <text x="260" y="240" text-anchor="middle" font-size="16" fill="#666" font-weight="bold">Resistenza</text>
+                        <text x="260" y="260" text-anchor="middle" font-size="14" fill="#666" id="resistor-label">330Ω</text>
+                    </g>
+
+                    <!-- Wire from resistor back to battery (completing circuit) -->
+                    <line x1="295" y1="200" x2="350" y2="200" stroke="#333" stroke-width="3"/>
                     <line x1="350" y1="200" x2="350" y2="100" stroke="#333" stroke-width="3"/>
                     <line x1="350" y1="100" x2="50" y2="100" stroke="#333" stroke-width="3"/>
                     <line x1="50" y1="100" x2="50" y2="200" stroke="#333" stroke-width="3"/>
@@ -228,11 +228,28 @@
                     <!-- Current direction arrows -->
                     <g id="current-arrows">
                         <polygon points="125,200 130,197 130,203" fill="#2196f3"/>
-                        <polygon points="225,200 230,197 230,203" fill="#2196f3"/>
-                        <polygon points="315,200 320,197 320,203" fill="#2196f3"/>
+                        <polygon points="210,200 215,197 215,203" fill="#2196f3"/>
+                        <polygon points="320,200 325,197 325,203" fill="#2196f3"/>
                         <polygon points="350,150 347,145 353,145" fill="#2196f3"/>
                         <polygon points="200,100 197,95 203,95" fill="#2196f3"/>
                         <text x="200" y="85" text-anchor="middle" font-size="14" fill="#2196f3" font-weight="bold" id="current-label">I = 20mA</text>
+                    </g>
+
+                    <!-- Current flow callouts -->
+                    <g id="current-callouts">
+                        <!-- Callout after battery -->
+                        <line x1="125" y1="200" x2="125" y2="155" stroke="#2196f3" stroke-width="1" stroke-dasharray="2,2"/>
+                        <text x="125" y="145" text-anchor="middle" font-size="12" fill="#2196f3" font-weight="bold" id="callout-after-battery">I = 20mA</text>
+                        
+                        <!-- Callout after LED -->
+                        <line x1="210" y1="200" x2="210" y2="155" stroke="#2196f3" stroke-width="1" stroke-dasharray="2,2"/>
+                        <text x="210" y="145" text-anchor="middle" font-size="11" fill="#2196f3" font-weight="bold" id="callout-after-led-line1">I = 20mA</text>
+                        <text x="210" y="158" text-anchor="middle" font-size="10" fill="#2196f3" id="callout-after-led-line2">V ridotta di 2.0V</text>
+                        
+                        <!-- Callout after resistor -->
+                        <line x1="310" y1="200" x2="310" y2="155" stroke="#2196f3" stroke-width="1" stroke-dasharray="2,2"/>
+                        <text x="310" y="145" text-anchor="middle" font-size="11" fill="#2196f3" font-weight="bold" id="callout-after-resistor-line1">I = 20mA</text>
+                        <text x="310" y="158" text-anchor="middle" font-size="10" fill="#2196f3" id="callout-after-resistor-line2">V ridotta ulteriormente</text>
                     </g>
                 </svg>
             </div>
@@ -423,6 +440,13 @@
         const band3 = document.getElementById('band3');
         const band4 = document.getElementById('band4');
 
+        // Callout elements
+        const calloutAfterBattery = document.getElementById('callout-after-battery');
+        const calloutAfterLedLine1 = document.getElementById('callout-after-led-line1');
+        const calloutAfterLedLine2 = document.getElementById('callout-after-led-line2');
+        const calloutAfterResistorLine1 = document.getElementById('callout-after-resistor-line1');
+        const calloutAfterResistorLine2 = document.getElementById('callout-after-resistor-line2');
+
         // Result displays
         const resultCurrent = document.getElementById('result-current');
         const resultLedVoltage = document.getElementById('result-led-voltage');
@@ -571,6 +595,14 @@
             resultPower.textContent = (powerResistor * 1000).toFixed(0) + ' mW';
             resultLedPower.textContent = (powerLed * 1000).toFixed(0) + ' mW';
             currentLabel.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
+
+            // Update callouts
+            calloutAfterBattery.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
+            calloutAfterLedLine1.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
+            calloutAfterLedLine2.textContent = 'V ridotta di ' + led.forwardVoltage.toFixed(1) + 'V';
+            calloutAfterResistorLine1.textContent = 'I = ' + currentMA.toFixed(1) + 'mA';
+            const remainingVoltage = voltage - led.forwardVoltage - voltageAcrossResistor;
+            calloutAfterResistorLine2.textContent = 'V ≈ ' + Math.abs(remainingVoltage).toFixed(1) + 'V';
 
             // Display warning if any
             warningMessage.innerHTML = warning;
