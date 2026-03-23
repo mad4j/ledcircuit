@@ -294,6 +294,14 @@
       display: none;
     }
 
+    .resistor-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      width: 160px;
+    }
+
     .resistor-visual svg {
       display: block;
       width: 160px;
@@ -485,33 +493,51 @@
     </div>
 
     <div class="extras-row">
-      <div class="resistor-visual" id="resistor-color-code">
-        <svg width="200" height="140" viewBox="0 0 200 140">
-          <!-- Resistor body -->
-          <rect x="20" y="55" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
-          <!-- Wire leads -->
-          <line x1="0" y1="70" x2="20" y2="70" stroke="#999" stroke-width="2"/>
-          <line x1="180" y1="70" x2="200" y2="70" stroke="#999" stroke-width="2"/>
-          <!-- Color bands -->
-          <rect id="band1" x="45" y="55" width="12" height="30" fill="#000000"/>
-          <rect id="band2" x="70" y="55" width="12" height="30" fill="#000000"/>
-          <rect id="band3" x="95" y="55" width="12" height="30" fill="#000000"/>
-          <rect id="band4" x="145" y="55" width="12" height="30" fill="#FFD700"/>
-          <!-- Callout lines -->
-          <line x1="51" y1="55" x2="51" y2="35" stroke="#666" stroke-width="1"/>
-          <line x1="76" y1="55" x2="76" y2="25" stroke="#666" stroke-width="1"/>
-          <line x1="101" y1="55" x2="101" y2="35" stroke="#666" stroke-width="1"/>
-          <line x1="151" y1="85" x2="151" y2="105" stroke="#666" stroke-width="1"/>
-          <!-- Callout labels -->
-          <text x="51" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">1&#170; cifra</text>
-          <text id="band1-value" x="51" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
-          <text x="76" y="10" text-anchor="middle" font-size="10" fill="#555" font-weight="500">2&#170; cifra</text>
-          <text id="band2-value" x="76" y="22" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
-          <text x="101" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Moltiplic.</text>
-          <text id="band3-value" x="101" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">&#215;10</text>
-          <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
-          <text id="band4-value" x="151" y="127" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">&#177;5%</text>
-        </svg>
+      <div class="resistor-section">
+        <div class="resistor-visual" id="resistor-color-code">
+          <svg width="200" height="140" viewBox="0 0 200 140">
+            <!-- Resistor body -->
+            <rect x="20" y="55" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
+            <!-- Wire leads -->
+            <line x1="0" y1="70" x2="20" y2="70" stroke="#999" stroke-width="2"/>
+            <line x1="180" y1="70" x2="200" y2="70" stroke="#999" stroke-width="2"/>
+            <!-- Color bands -->
+            <rect id="band1" x="45" y="55" width="12" height="30" fill="#000000"/>
+            <rect id="band2" x="70" y="55" width="12" height="30" fill="#000000"/>
+            <rect id="band3" x="95" y="55" width="12" height="30" fill="#000000"/>
+            <rect id="band4" x="145" y="55" width="12" height="30" fill="#FFD700"/>
+            <!-- Callout lines -->
+            <line x1="51" y1="55" x2="51" y2="35" stroke="#666" stroke-width="1"/>
+            <line x1="76" y1="55" x2="76" y2="25" stroke="#666" stroke-width="1"/>
+            <line x1="101" y1="55" x2="101" y2="35" stroke="#666" stroke-width="1"/>
+            <line x1="151" y1="85" x2="151" y2="105" stroke="#666" stroke-width="1"/>
+            <!-- Callout labels -->
+            <text x="51" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">1&#170; cifra</text>
+            <text id="band1-value" x="51" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
+            <text x="76" y="10" text-anchor="middle" font-size="10" fill="#555" font-weight="500">2&#170; cifra</text>
+            <text id="band2-value" x="76" y="22" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">3</text>
+            <text x="101" y="20" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Moltiplic.</text>
+            <text id="band3-value" x="101" y="32" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">&#215;10</text>
+            <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
+            <text id="band4-value" x="151" y="127" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">&#177;5%</text>
+          </svg>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span class="name">Potenza R</span>
+            <span class="val"><span id="power-rating-display">1/4</span> W</span>
+          </div>
+          <input type="range" id="power-rating" min="0" max="5" step="1" value="1" list="power-rating-markers">
+          <datalist id="power-rating-markers">
+            <option value="0" label="1/8W"></option>
+            <option value="1" label="1/4W"></option>
+            <option value="2" label="1/2W"></option>
+            <option value="3" label="1W"></option>
+            <option value="4" label="2W"></option>
+            <option value="5" label="5W"></option>
+          </datalist>
+        </div>
       </div>
 
       <div class="led-info">
@@ -656,6 +682,11 @@
     var band3Value = document.getElementById('band3-value');
     var band4Value = document.getElementById('band4-value');
 
+    var powerRatingInput   = document.getElementById('power-rating');
+    var powerRatingDisplay = document.getElementById('power-rating-display');
+    var powerRatingsMap    = [0.125, 0.25, 0.5, 1, 2, 5];
+    var powerRatingsLabels = ['1/8', '1/4', '1/2', '1', '2', '5'];
+
     var resultCurrentCircuit         = document.getElementById('result-current-circuit');
     var resultLedVoltageCircuit      = document.getElementById('result-led-voltage-circuit');
     var resultResistorVoltageCircuit = document.getElementById('result-resistor-voltage-circuit');
@@ -733,6 +764,11 @@
         updateBatteryTypes(voltage);
         updateTrackFill(voltageInput);
 
+        var powerRatingIdx = parseInt(powerRatingInput.value);
+        var powerRatingW   = powerRatingsMap[powerRatingIdx];
+        powerRatingDisplay.textContent = powerRatingsLabels[powerRatingIdx];
+        updateTrackFill(powerRatingInput);
+
         voltageDisplay.textContent = parseFloat(voltage.toFixed(1));
         batteryLabel.textContent   = parseFloat(voltage.toFixed(1)) + 'V';
         resistorLabel.textContent  = resistance + '\u03a9';
@@ -790,6 +826,9 @@
         setResultText(resultLedPowerCircuit,        (powerLed * 1000).toFixed(0) + ' mW');
         currentLabel.textContent = 'I = ' + mA.toFixed(1) + 'mA';
 
+        if (powerResistor > powerRatingW) {
+            warning += '<div class="warning">\u26a0\ufe0f ATTENZIONE: La potenza dissipata dalla resistenza (' + (powerResistor * 1000).toFixed(0) + ' mW) supera la potenza nominale (' + powerRatingsLabels[powerRatingIdx] + ' W). Usare una resistenza di potenza superiore!</div>';
+        }
         setResultHtml(warningMessageCircuit, warning);
 
         var brightness = Math.min(mA / led.typicalCurrent, 2);
@@ -830,6 +869,7 @@
     voltageInput.addEventListener('input', calculateCircuit);
     resistanceInput.addEventListener('input', calculateCircuit);
     ledColorSelect.addEventListener('change', calculateCircuit);
+    powerRatingInput.addEventListener('input', calculateCircuit);
 
     var rafId = null;
     window.addEventListener('resize', function() {
