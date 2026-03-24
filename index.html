@@ -158,7 +158,7 @@
     /* ── Controls grid ── */
     .controls-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px 20px;
     }
 
@@ -292,6 +292,14 @@
 
     .extras-row::-webkit-scrollbar {
       display: none;
+    }
+
+    /* ── Resistor visual wrapper ── */
+    .resistor-visual-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex-shrink: 0;
     }
 
     .resistor-visual svg {
@@ -464,14 +472,6 @@
 
       <div class="control-group">
         <div class="control-label">
-          <span class="name">Resistenza</span>
-          <span class="val">&#937;</span>
-        </div>
-        <input type="number" id="resistance" min="0" max="10000" step="10" value="330">
-      </div>
-
-      <div class="control-group">
-        <div class="control-label">
           <span class="name">LED</span>
         </div>
         <select id="led-color">
@@ -485,7 +485,23 @@
     </div>
 
     <div class="extras-row">
-      <div class="resistor-visual" id="resistor-color-code">
+      <div class="resistor-visual-wrapper">
+        <div class="control-group">
+          <div class="control-label">
+            <span class="name">Resistenza</span>
+            <span class="val"><span id="resistance-display">330</span> &#937;</span>
+          </div>
+          <input type="range" id="resistance" min="0" max="16" step="1" value="7" list="resistance-markers">
+          <!-- max is also set dynamically by JS to match resistanceValues.length - 1 -->
+          <datalist id="resistance-markers">
+            <option value="0" label="33&#937;"></option>
+            <option value="3" label="100&#937;"></option>
+            <option value="7" label="330&#937;"></option>
+            <option value="11" label="1k&#937;"></option>
+            <option value="16" label="10k&#937;"></option>
+          </datalist>
+        </div>
+        <div class="resistor-visual" id="resistor-color-code">
         <svg width="200" height="140" viewBox="0 0 200 140">
           <!-- Resistor body -->
           <rect x="20" y="55" width="160" height="30" fill="#d4a574" stroke="#8B6F47" stroke-width="2" rx="3"/>
@@ -512,6 +528,7 @@
           <text x="151" y="115" text-anchor="middle" font-size="10" fill="#555" font-weight="500">Tolleranza</text>
           <text id="band4-value" x="151" y="127" text-anchor="middle" font-size="9" fill="#2196f3" font-weight="bold">&#177;5%</text>
         </svg>
+        </div>
       </div>
 
       <div class="led-info">
@@ -634,6 +651,7 @@
     var voltageInput    = document.getElementById('voltage');
     var voltageDisplay  = document.getElementById('voltage-display');
     var resistanceInput = document.getElementById('resistance');
+    var resistanceDisplay = document.getElementById('resistance-display');
     var ledColorSelect  = document.getElementById('led-color');
     var ledCircle       = document.getElementById('led-circle');
     var ledLabel        = document.getElementById('led-label');
@@ -726,14 +744,19 @@
 
     function calculateCircuit() {
         var voltageMap  = [1.5, 3, 4.5, 6, 9, 12];
+        // Common resistor values for LED circuits (subset of E12/E24 series)
+        var resistanceValues = [33, 47, 68, 100, 150, 220, 270, 330, 470, 560, 680, 1000, 1500, 2200, 3300, 4700, 10000];
+        resistanceInput.max = resistanceValues.length - 1;
         var voltage     = voltageMap[parseInt(voltageInput.value)];
-        var resistance  = parseFloat(resistanceInput.value);
+        var resistance  = resistanceValues[parseInt(resistanceInput.value)];
         var led         = ledDatabase[ledColorSelect.value];
 
         updateBatteryTypes(voltage);
         updateTrackFill(voltageInput);
+        updateTrackFill(resistanceInput);
 
         voltageDisplay.textContent = parseFloat(voltage.toFixed(1));
+        resistanceDisplay.textContent = resistance >= 1000 ? (resistance / 1000) + 'k' : resistance;
         batteryLabel.textContent   = parseFloat(voltage.toFixed(1)) + 'V';
         resistorLabel.textContent  = resistance + '\u03a9';
         ledLabel.textContent       = led.name;
@@ -839,6 +862,7 @@
 
     // Initial render
     updateTrackFill(voltageInput);
+    updateTrackFill(resistanceInput);
     calculateCircuit();
     adjustLayout();
   </script>
